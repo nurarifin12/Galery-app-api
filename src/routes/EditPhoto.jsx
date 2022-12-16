@@ -13,11 +13,26 @@ const EditPhoto = () => {
   const editPhoto = (e) => {
     e.preventDefault();
     // TODO: answer here
+    const requestOption = {
+      method: "PATCH",
+      headers: { "Content-Type": "aplication/json" },
+    };
+    fetch(`https://gallery-app-server.vercel.app/photos?id=${id}`, requestOption)
+      .then((Response) => Response.json())
+      .then((json) => {
+        console.log({ json, data: json.id });
+      });
   };
 
   useEffect(() => {
     setLoading(true);
-    // TODO: answer here
+    fetch(`https://gallery-app-server.vercel.app/photos?id=${id}`)
+      .then((Response) => Response.json())
+      .then((json) => {
+        setLoading(false);
+        navigate("/photos");
+        setError("eror");
+      });
   }, [id]);
 
   if (error) return <div>Error!</div>;
